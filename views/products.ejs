@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Products | E-Commerce Store</title>
+  <link rel="stylesheet" href="css/product.css">
+</head>
+<body>
+
+<%- include('./partials/nav.ejs') %>
+
+  <section class="hero">
+    <h1>Explore Our Products</h1>
+    <p>Find quality products at affordable prices.</p>
+  </section>
+
+  <section class="product-section">
+    <% if (products.length === 0) { %>
+      <div class="empty-box">
+        <h2>No products available</h2>
+        
+      </div>
+    <% } else { %>
+
+      <div class="product-grid">
+        <% products.forEach(product => { %>
+          <div class="product-card">
+            <div class="product-img-box">
+              <img src="<%= product.image %>" alt="<%= product.name %>">
+            </div>
+
+            <div class="product-info">
+              <span class="category"><%= product.category %></span>
+              <h3><%= product.name %></h3>
+              <p class="description">
+                <%= product.description.substring(0, 80) %>...
+              </p>
+
+              <div class="price-row">
+                <span class="price">₹<%= product.price %></span>
+             
+                  <% if (product.stock > 0) { %>
+                    <span class="stock">  In Stock </span>
+               
+                  <% } else { %>
+                
+                    <span class="stock" style="color: red;">  Out of Stock</span>
+                  <% } %>
+               
+              </div>
+
+              <a href="/products/<%= product._id %>" class="details-btn">
+                View Details
+              </a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+
+    <% } %>
+  </section>
+
+  <script src="/js/products.js"></script>
+</body>
+</html>

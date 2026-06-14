@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= product.name %> | Product Details</title>
+    <link rel="stylesheet" href="/css/product_detail.css">
+</head>
+<body>
+
+    <%- include('./partials/nav.ejs') %>
+
+    <main class="product-container">
+
+        <div class="image-section">
+            <img src="<%=  product.image %>" alt="<%= product.name %>">
+        </div>
+
+        <div class="details-section">
+
+            <span class="category">
+                <%= product.category %>
+            </span>
+
+            <h1><%= product.name %></h1>
+
+            <div class="price">
+                ₹<%= product.price %>
+            </div>
+
+            <div class="stock">
+                <% if(product.stock > 0){ %>
+                    <span class="in-stock">✓ In Stock</span>
+                <% } else { %>
+                    <span class="out-stock">Out Of Stock</span>
+                <% } %>
+            </div>
+
+            <div class="description">
+                <h3>Description</h3>
+                <p><%= product.description %></p>
+            </div>
+
+            
+            <% if(product.stock > 0){ %>
+                <div class="action-buttons">
+
+                    <form action="/cart/add/<%= product._id %>" method="POST">
+                        <button type="submit" class="cart-btn">
+                            Add To Cart
+                        </button>
+                    </form>
+    
+                    <a href="/products" class="back-btn">
+                        Back To Products
+                    </a>
+    
+                </div>
+                <% } else { %>
+                    <p style="margin-top: 20px; color: blue;"> product will be in stock soon</p>
+             <% } %>
+
+        </div>
+
+    </main>
+
+    <script src="/js/product-details.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+
+    <link rel="stylesheet" href="/css/cart.css">
+</head>
+<body>
+
+    <%- include('./partials/nav.ejs') %>
+
+<div class="cart-container">
+
+    <h1>Your Cart</h1>
+
+    <% if(!cart || cart.items.length===0){ %>
+
+        <div class="empty-cart">
+            <h2>Your cart is empty</h2>
+
+            <a href="/products" class="shop-btn">
+                Continue Shopping
+            </a>
+        </div>
+
+    <% } else { %>
+
+        <% cart.items.forEach(item => { %>
+
+            <div class="cart-item">
+
+                <img
+                    src="<%= item.productId.image %>"
+                    alt="<%= item.productId.name %>"
+                >
+
+                <div class="item-details">
+
+                    <h2><%= item.productId.name %></h2>
+
+                    <p>
+                        ₹<%= item.productId.price %>
+                    </p>
+                    <p>
+                        <div class="quantity-actions" style="display:flex; align-items:center; gap:10px;">
+
+                            <span>Quantity : <%= item.quantity %></span>
+                        
+                            
+                            <form action="/cart/increase/<%= item.productId._id %>"
+                                method="POST"
+                                style="display:inline;">
+                                <button type="submit"
+                                style="padding:8px 12px; border:none; background:#2563eb; color:white; border-radius:5px; cursor:pointer;">
+                                Increase
+                            </button>
+                        </form>
+                        <form action="/cart/decrease/<%= item.productId._id %>" 
+                              method="POST"
+                              style="display:inline;">
+                            <button type="submit"
+                                    style="padding:8px 12px; border:none; background:#eb2525; color:white; border-radius:5px; cursor:pointer;">
+                                Decrease
+                            </button>
+                        </form>
+                        
+                        </div>
+
+                        <% if(message){ %>
+
+                            <div style="
+                                background:#fee2e2;
+                                color:#b91c1c;
+                                padding:12px;
+                                border-radius:8px;
+                                margin-bottom:20px;
+                                font-weight:bold;
+                            ">
+                                <%= message %>
+                            </div>
+                        
+                        <% } %>
+                    </p>
+                    
+
+<p>
+    <form action="/cart/remove/<%= item.productId._id %>" method="POST">
+        <button type="submit" class="remove-btn" 
+        style="padding:8px 12px; border:none; background:#ff0e0e; color:white; border-radius:5px; cursor:pointer;"
+        >Remove</button>
+      </form>
+</p>
+                </div>
+
+            </div>
+
+        <% }) %>
+
+        <div class="summary">
+
+            <h2>
+                Total : ₹<%= total %>
+            </h2>
+
+            <a href="/checkout" class="checkout-btn">
+                Proceed To Checkout
+            </a>
+
+        </div>
+
+    <% } %>
+
+</div>
+
+</body>
+</html>
