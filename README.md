@@ -240,7 +240,7 @@ http://localhost:3000
 
 ### 🛍️ Products Page
 
-![Products Page](./screenshots/products.png)
+![Products Page](./screenshots/product.png)
 
 ### 📦 Product Details Page
 
